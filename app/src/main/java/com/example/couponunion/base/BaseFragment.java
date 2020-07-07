@@ -47,6 +47,7 @@ public abstract class BaseFragment extends Fragment {
         //初始化ButterKnife
         unbinder = ButterKnife.bind(this, rootView);
         initView(rootView);
+        initListener();
         initPresenter();
         loadData();
         return rootView;
@@ -103,6 +104,12 @@ public abstract class BaseFragment extends Fragment {
 
     }
 
+    /**
+     * 初始化监听器
+     */
+    protected void initListener() {
+
+    }
     /**
      * 初始化Presenter
      */

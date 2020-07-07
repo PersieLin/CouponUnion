@@ -10,7 +10,7 @@ public interface ICategoryPagerCallback extends IBaseCallback {
     void onCategoryContentLoaded(List<HomePagerContent.DataBean> contents);
 
     //加载更多
-    void onLoaderMore(HomePagerContent.DataBean content);
+    void onLoaderMore(List<HomePagerContent.DataBean> content);
 
     //加载更多错误
     void onLoaderMoreError(int categoryId);
