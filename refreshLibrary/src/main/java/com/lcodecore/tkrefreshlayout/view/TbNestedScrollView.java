@@ -1,7 +1,8 @@
-package com.example.couponunion.ui.custom;
+package com.lcodecore.tkrefreshlayout.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -9,21 +10,23 @@ import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class TBNestedScrollView extends NestedScrollView {
+import com.lcodecore.tkrefreshlayout.utils.LogUtil;
+
+public class TbNestedScrollView extends NestedScrollView {
 
     private int mHeaderHeight = 0;
     private RecyclerView mRecyclerView;
     private int originScroll = 0;
 
-    public TBNestedScrollView(@NonNull Context context) {
+    public TbNestedScrollView(@NonNull Context context) {
         super(context);
     }
 
-    public TBNestedScrollView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public TbNestedScrollView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public TBNestedScrollView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public TbNestedScrollView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -51,5 +54,21 @@ public class TBNestedScrollView extends NestedScrollView {
         //
         this.originScroll = t;
         super.onScrollChanged(l, t, oldl, oldt);
+    }
+
+    /**
+     * 判断子类是否已经滑动到底部
+     * @return
+     */
+    public boolean isToBottom(){
+        //判断垂直方向是否能够滑动
+        if (mRecyclerView != null) {
+            //判断子View是否已滑到底部
+            boolean isBottom = !mRecyclerView.canScrollVertically(1);
+//            Log.d("TbNestedScrollerView","mRecyclerView isBottom == > " + isBottom);
+            return isBottom;
+        } else {
+            return false;
+        }
     }
 }

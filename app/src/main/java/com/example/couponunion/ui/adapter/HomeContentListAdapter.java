@@ -31,7 +31,7 @@ public class HomeContentListAdapter extends RecyclerView.Adapter<HomeContentList
     @Override
     public InnerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_content, parent, false);
-        LogUtil.d(this, "onCreateViewHolder...");
+//        LogUtil.d(this, "onCreateViewHolder...");
         return new InnerHolder(itemView);
     }
 
@@ -43,7 +43,7 @@ public class HomeContentListAdapter extends RecyclerView.Adapter<HomeContentList
     @Override
     public void onBindViewHolder(@NonNull InnerHolder holder, int position) {
         HomePagerContent.DataBean itemContent = mData.get(position);
-        LogUtil.d(this, "onBindViewHolder...  -->" + position);
+//        LogUtil.d(this, "onBindViewHolder...  -->" + position);
         holder.setData(itemContent);
     }
 

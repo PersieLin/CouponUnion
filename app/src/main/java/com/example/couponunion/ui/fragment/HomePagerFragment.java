@@ -21,7 +21,7 @@ import com.example.couponunion.presenter.ICategoryPagerPresenter;
 import com.example.couponunion.presenter.impl.CategoryPagerPresenterImpl;
 import com.example.couponunion.ui.adapter.HomeContentListAdapter;
 import com.example.couponunion.ui.adapter.LooperPagerAdapter;
-import com.example.couponunion.ui.custom.TBNestedScrollView;
+import com.lcodecore.tkrefreshlayout.view.TbNestedScrollView;
 import com.example.couponunion.utils.Constants;
 import com.example.couponunion.utils.LogUtil;
 import com.example.couponunion.utils.SizeUtil;
@@ -64,7 +64,7 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
     public LinearLayout homePagerHeader;
 
     @BindView(R.id.home_nested_scroller)
-    public TBNestedScrollView homeNestedScroller;
+    public TbNestedScrollView homeNestedScroller;
 
 
 
@@ -150,9 +150,11 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         homePagerParent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener(){
             @Override
             public void onGlobalLayout() {
-                int headerHeight = homePagerHeader.getMeasuredHeight();
-                LogUtil.d(HomePagerFragment.this, "homePagerHeader measureHeight -->" + headerHeight);
-                homeNestedScroller.setHeaderHeight(headerHeight);
+                if (homePagerHeader != null) {
+                    int headerHeight = homePagerHeader.getMeasuredHeight();
+                    LogUtil.d(HomePagerFragment.this, "homePagerHeader measureHeight -->" + headerHeight);
+                    homeNestedScroller.setHeaderHeight(headerHeight);
+                }
                 ViewGroup.LayoutParams layoutParams = mContentList.getLayoutParams();
                 int measureHeight = homePagerParent.getMeasuredHeight();
                 //将RecyclerView的height设置为父容器测量后的Height

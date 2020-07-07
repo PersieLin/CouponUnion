@@ -32,6 +32,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.lcodecore.tkrefreshlayout.view.TbNestedScrollView;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -95,6 +97,8 @@ public class ScrollingUtil {
         if (view instanceof AbsListView) return isAbsListViewToBottom((AbsListView) view);
         if (view instanceof RecyclerView) return isRecyclerViewToBottom((RecyclerView) view);
         if (view instanceof WebView) return isWebViewToBottom((WebView) view, mTouchSlop);
+        //加入自定义的NestScrollerView，根据子View的实际情况返回是否到底部
+        if (view instanceof TbNestedScrollView) return ((TbNestedScrollView) view).isToBottom();
         if (view instanceof ViewGroup) return isViewGroupToBottom((ViewGroup) view);
         return false;
     }
