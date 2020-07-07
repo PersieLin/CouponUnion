@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <attr name="duration">
+        <enum name="short_time" value="1000"/>
+        <enum name="normal_time" value="3000"/>
+        <enum name="long_time" value="5000"/>
+    </attr>
+    <declare-styleable name="AutoLoopViewPager">
+        <attr name="duration"/>
+    </declare-styleable>
 </resources>

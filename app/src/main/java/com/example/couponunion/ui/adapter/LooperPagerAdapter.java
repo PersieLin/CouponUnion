@@ -20,7 +20,7 @@ import java.util.List;
 public class LooperPagerAdapter extends PagerAdapter {
 
     private List<HomePagerContent.DataBean> dataList = new ArrayList<>();
-
+    private OnLooperItemClickListener itemClickListener;
 
     @NonNull
     @Override
@@ -43,7 +43,20 @@ public class LooperPagerAdapter extends PagerAdapter {
         Glide.with(context).load(picUrl).into(iv);
         //记得将动态导入的View add到container中
         container.addView(iv);
+        //设置轮播图点击监听
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (itemClickListener != null) {
+                    itemClickListener.onLooperItemClick(dataList.get(realPosition));
+                }
+            }
+        });
         return iv;
+    }
+
+    public void setLooperItemClickListener(OnLooperItemClickListener listener) {
+        this.itemClickListener = listener;
     }
 
     @Override
@@ -65,7 +78,7 @@ public class LooperPagerAdapter extends PagerAdapter {
         container.removeView((View) object);
     }
 
-    public int getDataSize(){
+    public int getDataSize() {
         return dataList.size();
     }
 
@@ -75,5 +88,10 @@ public class LooperPagerAdapter extends PagerAdapter {
         //切记要通知
         notifyDataSetChanged();
 
+    }
+
+
+    public interface OnLooperItemClickListener {
+        void onLooperItemClick(HomePagerContent.DataBean dataBean);
     }
 }

@@ -9,18 +9,24 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.couponunion.R;
+import com.example.couponunion.base.BaseActivity;
 import com.example.couponunion.base.BaseFragment;
+import com.example.couponunion.model.domain.HomePagerContent;
+import com.example.couponunion.ui.adapter.HomeContentListAdapter;
+import com.example.couponunion.ui.adapter.HomePagerAdapter;
+import com.example.couponunion.ui.adapter.LooperPagerAdapter;
 import com.example.couponunion.ui.fragment.HomeFragment;
 import com.example.couponunion.ui.fragment.RedPacketFragment;
 import com.example.couponunion.ui.fragment.SearchFragment;
 import com.example.couponunion.ui.fragment.SelectedFragment;
+import com.example.couponunion.utils.LogUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     //View绑定
     @BindView(R.id.main_navigation_bar)
@@ -36,21 +42,24 @@ public class MainActivity extends AppCompatActivity {
     private RedPacketFragment mRedPacketFragment;
     private SearchFragment mSearchFragment;
 
+    private BaseFragment lastOneFragment = null;
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        unbinder = ButterKnife.bind(this);
-        initView();
-        initFragments();
-        initListener();
+    protected void initPresenter() {
+
     }
 
     /**
      * 初始化布局
      */
-    private void initView() {
+    protected void initView() {
+        initFragments();
+    }
 
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_main;
     }
 
     /**
@@ -69,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 初始化监听器
      */
-    private void initListener() {
+    protected void initEvent() {
         //导航栏按钮回调
         navBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -91,25 +100,31 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
     }
+
+
 
     /**
      * 切换Fragment
      */
-    private void switchFragment(BaseFragment nextFragment) {
+    private void switchFragment(BaseFragment targetFragment) {
         FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(R.id.main_page_container, nextFragment);
-        transaction.commit();
-
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //解绑ButterKnife
-        if (unbinder != null) {
-            unbinder.unbind();
+        //当目标布局尚未被添加到事务中
+        if (!targetFragment.isAdded()) {
+            transaction.add(R.id.main_page_container, targetFragment);
         }
+
+        if (lastOneFragment != null) {
+            transaction.hide(lastOneFragment);
+        }
+        transaction.show(targetFragment);
+        lastOneFragment = targetFragment;
+        transaction.commit();
     }
+    @Override
+    protected void release() {
+
+    }
+
 }

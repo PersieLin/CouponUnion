@@ -32,6 +32,7 @@ public class CategoryPagerPresenterImpl implements ICategoryPagerPresenter {
     private static CategoryPagerPresenterImpl mInstance;
     private int currentPage;
 
+    private CategoryPagerPresenterImpl(){}
     public static CategoryPagerPresenterImpl getInstance() {
         if (mInstance == null) {
             mInstance = new CategoryPagerPresenterImpl();

@@ -14,6 +14,7 @@ import com.example.couponunion.model.domain.Categories;
 import com.example.couponunion.presenter.IHomePresenter;
 import com.example.couponunion.presenter.impl.HomePresenterImpl;
 import com.example.couponunion.ui.adapter.HomePagerAdapter;
+import com.example.couponunion.utils.PresenterManager;
 import com.example.couponunion.view.IHomeCallback;
 import com.google.android.material.tabs.TabLayout;
 
@@ -55,7 +56,7 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
 
     @Override
     protected void initPresenter() {
-        homePresenter = new HomePresenterImpl();
+        homePresenter = PresenterManager.getInstance().getHomePresenter();
         //注册回调
         homePresenter.registerViewCallback(this);
     }

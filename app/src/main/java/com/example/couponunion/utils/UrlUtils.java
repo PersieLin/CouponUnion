@@ -1,11 +1,26 @@
 package com.example.couponunion.utils;
 
 public class UrlUtils {
+
+    private static final String HTTPS_PRE = "https:";
+
     public static String createUrl(int materialId, int page) {
         return "discovery/" + materialId +"/" + page;
     }
 
     public static String getCoverPath(String pict_url, int size) {
-        return "https:" + pict_url + "_" + size + "x" + size + ".jpg";
+        return HTTPS_PRE + pict_url + "_" + size + "x" + size + ".jpg";
+    }
+
+    public static String getCoverPath(String pict_url) {
+        return HTTPS_PRE + pict_url;
+    }
+
+    public static String getTicketUrl(String url) {
+        if (url.startsWith("http:") || url.startsWith("https:")){
+            return url;
+        }
+        else
+            return HTTPS_PRE + url;
     }
 }

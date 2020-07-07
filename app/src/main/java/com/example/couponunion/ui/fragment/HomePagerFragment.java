@@ -1,5 +1,6 @@
 package com.example.couponunion.ui.fragment;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
@@ -18,9 +19,13 @@ import com.example.couponunion.base.BaseFragment;
 import com.example.couponunion.model.domain.Categories;
 import com.example.couponunion.model.domain.HomePagerContent;
 import com.example.couponunion.presenter.ICategoryPagerPresenter;
+import com.example.couponunion.presenter.ITicketPresenter;
 import com.example.couponunion.presenter.impl.CategoryPagerPresenterImpl;
+import com.example.couponunion.ui.activity.TicketActivity;
 import com.example.couponunion.ui.adapter.HomeContentListAdapter;
 import com.example.couponunion.ui.adapter.LooperPagerAdapter;
+import com.example.couponunion.ui.custom.AutoLoopViewPager;
+import com.example.couponunion.utils.PresenterManager;
 import com.lcodecore.tkrefreshlayout.view.TbNestedScrollView;
 import com.example.couponunion.utils.Constants;
 import com.example.couponunion.utils.LogUtil;
@@ -34,7 +39,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class HomePagerFragment extends BaseFragment implements ICategoryPagerCallback {
+public class HomePagerFragment extends BaseFragment implements ICategoryPagerCallback, LooperPagerAdapter.OnLooperItemClickListener, HomeContentListAdapter.OnHomePagerItemClickListener {
 
 
     private ICategoryPagerPresenter mPresenter;
@@ -45,7 +50,7 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
     public RecyclerView mContentList;
 
     @BindView(R.id.looper_pager)
-    public ViewPager looperPager;
+    public AutoLoopViewPager looperPager;
 
     @BindView(R.id.looper_point_container)
     public LinearLayout looperPointContainer;
@@ -65,7 +70,6 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
 
     @BindView(R.id.home_nested_scroller)
     public TbNestedScrollView homeNestedScroller;
-
 
 
     private HomeContentListAdapter contentListAdapter;
@@ -115,6 +119,9 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
 
     @Override
     protected void initListener() {
+        //设置轮播图和列表的点击监听
+        contentListAdapter.setItemClickListener(this);
+        mLooperAdapter.setLooperItemClickListener(this);
         //轮播图监听器，用于监听图片index并切换指示器的位置
         looperPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -124,6 +131,9 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
 
             @Override
             public void onPageSelected(int position) {
+                if (mLooperAdapter.getDataSize() == 0) {
+                    return;
+                }
                 //伪循环中的position转换成正确的位置，并更新指示器的状态
                 int targetPosition = position % mLooperAdapter.getDataSize();
                 updateLooperIndicator(targetPosition);
@@ -147,26 +157,71 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
 
         //监听父容器的Layout过程，并返回最终的MeasureHeight值，用于确定RecyclerView的height，从而避免在NestScrollView中直接生成大量的Holder消耗资源
         //在此处同时动态测量和设置需要被外部NestedScrollView的先消费的Height
-        homePagerParent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener(){
+        homePagerParent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                if (homePagerHeader != null) {
-                    int headerHeight = homePagerHeader.getMeasuredHeight();
-                    LogUtil.d(HomePagerFragment.this, "homePagerHeader measureHeight -->" + headerHeight);
-                    homeNestedScroller.setHeaderHeight(headerHeight);
+                if (homePagerHeader == null) {
+                    return;
                 }
+                int headerHeight = homePagerHeader.getMeasuredHeight();
+//                LogUtil.d(HomePagerFragment.this, "homePagerHeader measureHeight -->" + headerHeight);
+                homeNestedScroller.setHeaderHeight(headerHeight);
                 ViewGroup.LayoutParams layoutParams = mContentList.getLayoutParams();
                 int measureHeight = homePagerParent.getMeasuredHeight();
                 //将RecyclerView的height设置为父容器测量后的Height
                 layoutParams.height = measureHeight;
                 mContentList.setLayoutParams(layoutParams);
-                LogUtil.d(HomePagerFragment.this, "homePageParent measureHeight -- > " + measureHeight);
+//                LogUtil.d(HomePagerFragment.this, "homePageParent measureHeight -- > " + measureHeight);
                 //当界面测量完毕后解绑监听器，避免重复执行代码
                 if (measureHeight != 0) {
                     homePagerParent.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 }
             }
         });
+    }
+
+    /**
+     * 列表项目点击回调
+     *
+     * @param itemContent 对应产品的数据
+     */
+    @Override
+    public void onHomePagerItemClick(HomePagerContent.DataBean itemContent) {
+//        LogUtil.d(this, "onHomePagerItemClick ......" + itemContent.getTitle());
+        handleItemClick(itemContent);
+
+    }
+
+    /**
+     * 轮播图点击回调
+     *
+     * @param itemContent 对应产品的数据
+     */
+    @Override
+    public void onLooperItemClick(HomePagerContent.DataBean itemContent) {
+//        LogUtil.d(this, "onLooperItemClick ......" + itemContent.getTitle());
+        handleItemClick(itemContent);
+    }
+
+    /**
+     * 点击事件处理，跳转到淘口令页面
+     * @param itemContent
+     */
+    private void handleItemClick(HomePagerContent.DataBean itemContent) {
+        //TODO 获取淘口令数据并传递到淘口令页面
+        ITicketPresenter ticketPresenter = PresenterManager.getInstance().getTicketPresenter();
+        ticketPresenter.getTicket(itemContent.getTitle(), itemContent.getClick_url(), itemContent.getPict_url());
+        Intent intent = new Intent(getActivity(), TicketActivity.class);
+        startActivity(intent);
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //当轮播图可见时执行轮播
+        looperPager.startLoop();
+        LogUtil.d(this, "onResume .....");
     }
 
     /**
@@ -194,7 +249,7 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         materialId = bundle.getInt(Constants.KEY_HOME_CATEGORY_MATERIAL_ID);
         LogUtil.d(this, "title-->" + title);
         LogUtil.d(this, "materialId-->" + materialId);
-        mPresenter = CategoryPagerPresenterImpl.getInstance();
+        mPresenter = PresenterManager.getInstance().getCategoryPagerPresenter();
         mPresenter.registerViewCallback(this);
         mPresenter.getContentByCategoryId(materialId);
     }
@@ -235,7 +290,7 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
 
     @Override
     public void onLoaderMoreEmpty(int categoryId) {
-            ToastUtil.showToast("没有更多商品");
+        ToastUtil.showToast("没有更多商品");
         if (homeRefreshLayout != null) {
             homeRefreshLayout.finishLoadmore();
         }
@@ -270,6 +325,14 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
             looperPointContainer.addView(pointView);
         }
         updateLooperIndicator(0);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        //当不可见时停止轮播
+        looperPager.stopLoop();
+        LogUtil.d(this, "onPause ......");
     }
 
     @Override
