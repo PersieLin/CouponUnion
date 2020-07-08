@@ -5,7 +5,7 @@ import android.widget.Toast;
 
 import com.example.couponunion.base.BaseApplication;
 
-public class ToastUtil {
+public class ToastUtils {
     //使用同一个Toast对象显示信息，避免短时间产生多个对象从而长时间显示
     private static Toast mToast;
 

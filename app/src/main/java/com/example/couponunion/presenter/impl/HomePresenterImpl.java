@@ -3,7 +3,7 @@ package com.example.couponunion.presenter.impl;
 import com.example.couponunion.model.Api;
 import com.example.couponunion.model.domain.Categories;
 import com.example.couponunion.presenter.IHomePresenter;
-import com.example.couponunion.utils.LogUtil;
+import com.example.couponunion.utils.LogUtils;
 import com.example.couponunion.utils.RetrofitManager;
 import com.example.couponunion.view.IHomeCallback;
 
@@ -41,12 +41,12 @@ public class HomePresenterImpl implements IHomePresenter {
                             mCallback.onCategoriesLoaded(categories);
                         }
                     } else {
-                        LogUtil.d(HomePresenterImpl.this, "callback is null!");
+                        LogUtils.d(HomePresenterImpl.this, "callback is null!");
                     }
                 } else {
                     //当响应的code不为200时，设置状态为error
                     mCallback.onError();
-                    LogUtil.e(HomePresenterImpl.this, "resultCode -->" + resultCode);
+                    LogUtils.e(HomePresenterImpl.this, "resultCode -->" + resultCode);
                 }
 
             }

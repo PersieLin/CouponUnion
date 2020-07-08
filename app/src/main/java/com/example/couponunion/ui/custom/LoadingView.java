@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import com.example.couponunion.R;
-import com.example.couponunion.utils.LogUtil;
+import com.example.couponunion.utils.LogUtils;
 
 /**
  * 加载控件
@@ -38,7 +38,7 @@ public class LoadingView extends AppCompatImageView {
     public void startRotate() {
         rotateFlag = true;
         post(rotateTask());
-        LogUtil.d(this, "startRotate......");
+        LogUtils.d(this, "startRotate......");
 
     }
 
@@ -49,7 +49,7 @@ public class LoadingView extends AppCompatImageView {
         rotateFlag = false;
         //停止旋转 取消回调
         boolean b = removeCallbacks(rotateTask());
-        LogUtil.d(this, "isStopRotate ==>" + b);
+        LogUtils.d(this, "isStopRotate ==>" + b);
     }
 
     public Runnable rotateTask() {
@@ -76,7 +76,7 @@ public class LoadingView extends AppCompatImageView {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         //当控件处于可见状态时开始旋转
-        LogUtil.d(this, "onAttachedToWindow ......");
+        LogUtils.d(this, "onAttachedToWindow ......");
         startRotate();
     }
 
@@ -84,6 +84,7 @@ public class LoadingView extends AppCompatImageView {
     protected void onDetachedFromWindow() {
         //当控件被释放时，停止旋转
         super.onDetachedFromWindow();
+        LogUtils.d(this, "onDetachedFromWindow ......");
         stopRotate();
     }
 

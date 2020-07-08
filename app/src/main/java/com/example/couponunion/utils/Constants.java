@@ -9,4 +9,5 @@ public class Constants {
     public static final String KEY_HOME_CATEGORY_TITLE = "title";
     public static final String KEY_HOME_CATEGORY_MATERIAL_ID = "materialId";
 
+    public static final int SUCCESS_CODE = 10000;
 }

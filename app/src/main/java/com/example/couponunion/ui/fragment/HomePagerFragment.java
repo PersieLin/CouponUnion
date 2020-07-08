@@ -20,7 +20,6 @@ import com.example.couponunion.model.domain.Categories;
 import com.example.couponunion.model.domain.HomePagerContent;
 import com.example.couponunion.presenter.ICategoryPagerPresenter;
 import com.example.couponunion.presenter.ITicketPresenter;
-import com.example.couponunion.presenter.impl.CategoryPagerPresenterImpl;
 import com.example.couponunion.ui.activity.TicketActivity;
 import com.example.couponunion.ui.adapter.HomeContentListAdapter;
 import com.example.couponunion.ui.adapter.LooperPagerAdapter;
@@ -28,9 +27,9 @@ import com.example.couponunion.ui.custom.AutoLoopViewPager;
 import com.example.couponunion.utils.PresenterManager;
 import com.lcodecore.tkrefreshlayout.view.TbNestedScrollView;
 import com.example.couponunion.utils.Constants;
-import com.example.couponunion.utils.LogUtil;
-import com.example.couponunion.utils.SizeUtil;
-import com.example.couponunion.utils.ToastUtil;
+import com.example.couponunion.utils.LogUtils;
+import com.example.couponunion.utils.SizeUtils;
+import com.example.couponunion.utils.ToastUtils;
 import com.example.couponunion.view.ICategoryPagerCallback;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
@@ -221,7 +220,7 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         super.onResume();
         //当轮播图可见时执行轮播
         looperPager.startLoop();
-        LogUtil.d(this, "onResume .....");
+        LogUtils.d(this, "onResume .....");
     }
 
     /**
@@ -243,12 +242,12 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
 
     @Override
     protected void loadData() {
-        LogUtil.d(this, "loadData ......");
+        LogUtils.d(this, "loadData ......");
         Bundle bundle = getArguments();
         title = bundle.getString(Constants.KEY_HOME_CATEGORY_TITLE);
         materialId = bundle.getInt(Constants.KEY_HOME_CATEGORY_MATERIAL_ID);
-        LogUtil.d(this, "title-->" + title);
-        LogUtil.d(this, "materialId-->" + materialId);
+        LogUtils.d(this, "title-->" + title);
+        LogUtils.d(this, "materialId-->" + materialId);
         mPresenter = PresenterManager.getInstance().getCategoryPagerPresenter();
         mPresenter.registerViewCallback(this);
         mPresenter.getContentByCategoryId(materialId);
@@ -275,14 +274,14 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         if (homeRefreshLayout != null) {
             homeRefreshLayout.finishLoadmore();
 //            Toast.makeText(getContext(), "加载了" + content.size() + "条记录", Toast.LENGTH_SHORT).show();
-            ToastUtil.showToast("加载了" + content.size() + "条记录");
+            ToastUtils.showToast("加载了" + content.size() + "条记录");
         }
 
     }
 
     @Override
     public void onLoaderMoreError(int categoryId) {
-        ToastUtil.showToast("网络异常，请稍后重试");
+        ToastUtils.showToast("网络异常，请稍后重试");
         if (homeRefreshLayout != null) {
             homeRefreshLayout.finishLoadmore();
         }
@@ -290,7 +289,7 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
 
     @Override
     public void onLoaderMoreEmpty(int categoryId) {
-        ToastUtil.showToast("没有更多商品");
+        ToastUtils.showToast("没有更多商品");
         if (homeRefreshLayout != null) {
             homeRefreshLayout.finishLoadmore();
         }
@@ -303,7 +302,7 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
      */
     @Override
     public void onLooperListLoaded(List<HomePagerContent.DataBean> contents) {
-        LogUtil.d(this, "looperList size --> " + contents.size());
+        LogUtils.d(this, "looperList size --> " + contents.size());
         mLooperAdapter.setData(contents);
         int contentSize = contents.size();
         //实现伪无限循环轮播(往返)，将初始化的页面位置设置为int maxvalue的中间值,并使其初始图的index为0
@@ -316,11 +315,11 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         for (int i = 0; i < contentSize; i++) {
             View pointView = new View(getContext());
             //点的宽高尺寸
-            int size = SizeUtil.dp2px(getContext(), 8);
+            int size = SizeUtils.dp2px(getContext(), 8);
             //将点的宽高尺寸设置为LinearLayoutParams
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(size, size);
-            layoutParams.leftMargin = SizeUtil.dp2px(getContext(), 5);
-            layoutParams.rightMargin = SizeUtil.dp2px(getContext(), 5);
+            layoutParams.leftMargin = SizeUtils.dp2px(getContext(), 5);
+            layoutParams.rightMargin = SizeUtils.dp2px(getContext(), 5);
             pointView.setLayoutParams(layoutParams);
             looperPointContainer.addView(pointView);
         }
@@ -332,7 +331,7 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         super.onPause();
         //当不可见时停止轮播
         looperPager.stopLoop();
-        LogUtil.d(this, "onPause ......");
+        LogUtils.d(this, "onPause ......");
     }
 
     @Override

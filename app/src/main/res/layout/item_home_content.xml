@@ -5,6 +5,7 @@
     android:background="@color/white"
     android:gravity="center_vertical"
     android:orientation="horizontal"
+    android:layout_marginStart="5dp"
     android:paddingTop="5dp"
     android:paddingBottom="5dp">
 
@@ -12,7 +13,7 @@
         android:id="@+id/goods_cover"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:src="@mipmap/ic_launcher" />
 
     <LinearLayout

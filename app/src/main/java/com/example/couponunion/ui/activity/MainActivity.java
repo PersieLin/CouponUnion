@@ -1,29 +1,21 @@
 package com.example.couponunion.ui.activity;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.couponunion.R;
 import com.example.couponunion.base.BaseActivity;
 import com.example.couponunion.base.BaseFragment;
-import com.example.couponunion.model.domain.HomePagerContent;
-import com.example.couponunion.ui.adapter.HomeContentListAdapter;
-import com.example.couponunion.ui.adapter.HomePagerAdapter;
-import com.example.couponunion.ui.adapter.LooperPagerAdapter;
 import com.example.couponunion.ui.fragment.HomeFragment;
 import com.example.couponunion.ui.fragment.RedPacketFragment;
 import com.example.couponunion.ui.fragment.SearchFragment;
 import com.example.couponunion.ui.fragment.SelectedFragment;
-import com.example.couponunion.utils.LogUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class MainActivity extends BaseActivity {

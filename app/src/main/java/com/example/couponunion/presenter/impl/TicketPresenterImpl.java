@@ -4,7 +4,7 @@ import com.example.couponunion.model.Api;
 import com.example.couponunion.model.domain.TicketParams;
 import com.example.couponunion.model.domain.TicketResult;
 import com.example.couponunion.presenter.ITicketPresenter;
-import com.example.couponunion.utils.LogUtil;
+import com.example.couponunion.utils.LogUtils;
 import com.example.couponunion.utils.RetrofitManager;
 import com.example.couponunion.utils.UrlUtils;
 import com.example.couponunion.view.ITicketPageCallback;
@@ -51,14 +51,14 @@ public class TicketPresenterImpl implements ITicketPresenter {
                     onTicketRequestSuccess();
                 } else {
                     mCurrentState = LoadState.LOAD_ERROR;
-                    LogUtil.d(TicketPresenterImpl.this, "请求失败! code ==> " + code);
+                    LogUtils.d(TicketPresenterImpl.this, "请求失败! code ==> " + code);
                     onTicketRequestError();
                 }
             }
 
             @Override
             public void onFailure(Call<TicketResult> call, Throwable t) {
-                LogUtil.d(TicketPresenterImpl.this, "请求失败!" + t.toString());
+                LogUtils.d(TicketPresenterImpl.this, "请求失败!" + t.toString());
             }
         });
 

@@ -2,7 +2,7 @@ package com.example.couponunion.utils;
 
 import android.util.Log;
 
-public class LogUtil {
+public class LogUtils {
     //调试信息工具类
 
     private static int current_lev = 4;

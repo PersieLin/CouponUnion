@@ -9,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.couponunion.R;
-import com.example.couponunion.utils.LogUtil;
 
 
 /**

@@ -17,9 +17,9 @@ import com.example.couponunion.R;
 import com.example.couponunion.base.BaseActivity;
 import com.example.couponunion.model.domain.TicketResult;
 import com.example.couponunion.presenter.ITicketPresenter;
-import com.example.couponunion.utils.LogUtil;
+import com.example.couponunion.utils.LogUtils;
 import com.example.couponunion.utils.PresenterManager;
-import com.example.couponunion.utils.ToastUtil;
+import com.example.couponunion.utils.ToastUtils;
 import com.example.couponunion.utils.UrlUtils;
 import com.example.couponunion.view.ITicketPageCallback;
 
@@ -60,7 +60,7 @@ public class TicketActivity extends BaseActivity implements ITicketPageCallback 
             mHasTaobaoApp = packageInfo != null;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
-            LogUtil.d(this, "mHasTaobaoApp == > " + mHasTaobaoApp);
+            LogUtils.d(this, "mHasTaobaoApp == > " + mHasTaobaoApp);
         }
 
         receiveBtn.setText(mHasTaobaoApp ? "打开淘宝领券" : "复制淘口令");
@@ -91,9 +91,16 @@ public class TicketActivity extends BaseActivity implements ITicketPageCallback 
                     taobaoIntent.setComponent(componentName);
                     startActivity(taobaoIntent);
                 } else {
-                    ToastUtil.showToast("复制成功！分享口令或打开淘宝");
+                    ToastUtils.showToast("复制成功！分享口令或打开淘宝");
                 }
 
+            }
+        });
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

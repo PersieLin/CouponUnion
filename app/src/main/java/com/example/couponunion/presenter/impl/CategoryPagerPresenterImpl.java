@@ -3,7 +3,7 @@ package com.example.couponunion.presenter.impl;
 import com.example.couponunion.model.Api;
 import com.example.couponunion.model.domain.HomePagerContent;
 import com.example.couponunion.presenter.ICategoryPagerPresenter;
-import com.example.couponunion.utils.LogUtil;
+import com.example.couponunion.utils.LogUtils;
 import com.example.couponunion.utils.RetrofitManager;
 import com.example.couponunion.utils.UrlUtils;
 import com.example.couponunion.view.ICategoryPagerCallback;
@@ -60,7 +60,7 @@ public class CategoryPagerPresenterImpl implements ICategoryPagerPresenter {
             @Override
             public void onResponse(Call<HomePagerContent> call, Response<HomePagerContent> response) {
                 int code = response.code();
-                LogUtil.d(CategoryPagerPresenterImpl.this, "responseCode -->" + code);
+                LogUtils.d(CategoryPagerPresenterImpl.this, "responseCode -->" + code);
                 if (code == HttpURLConnection.HTTP_OK) {
                     //正常返回数据
                     HomePagerContent body = response.body();
@@ -73,7 +73,7 @@ public class CategoryPagerPresenterImpl implements ICategoryPagerPresenter {
 
             @Override
             public void onFailure(Call<HomePagerContent> call, Throwable t) {
-                LogUtil.e(CategoryPagerPresenterImpl.this, t.toString());
+                LogUtils.e(CategoryPagerPresenterImpl.this, t.toString());
                 handleHomepageError(categoryId);
             }
         });
@@ -153,7 +153,7 @@ public class CategoryPagerPresenterImpl implements ICategoryPagerPresenter {
 
             @Override
             public void onFailure(Call<HomePagerContent> call, Throwable t) {
-                LogUtil.d(CategoryPagerPresenterImpl.this, t.toString());
+                LogUtils.d(CategoryPagerPresenterImpl.this, t.toString());
                 handleLoaderError(categoryId, currentPage);
             }
         });

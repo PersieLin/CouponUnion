@@ -92,7 +92,7 @@ public abstract class BaseFragment extends Fragment {
     protected void setUpState(State state) {
         currentState = state;
         mSuccessView.setVisibility(currentState == State.SUCCESS ? View.VISIBLE : View.GONE);
-        mLoadingView.setVisibility(currentState == State.LOADING ? View.VISIBLE : View.GONE);
+        mLoadingView.setVisibility(currentState == State.LOADING ? View.VISIBLE : View.INVISIBLE);
         mErrorView.setVisibility(currentState == State.ERROR ? View.VISIBLE : View.GONE);
         mEmptyView.setVisibility(currentState == State.EMPTY ? View.VISIBLE : View.GONE);
     }

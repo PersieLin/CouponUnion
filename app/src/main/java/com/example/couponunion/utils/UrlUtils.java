@@ -23,4 +23,8 @@ public class UrlUtils {
         else
             return HTTPS_PRE + url;
     }
+
+    public static String getSelectedContentUrl(int categoryId) {
+        return "recommend/" + categoryId;
+    }
 }

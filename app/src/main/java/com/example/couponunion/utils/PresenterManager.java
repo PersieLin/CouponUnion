@@ -2,9 +2,11 @@ package com.example.couponunion.utils;
 
 import com.example.couponunion.presenter.ICategoryPagerPresenter;
 import com.example.couponunion.presenter.IHomePresenter;
+import com.example.couponunion.presenter.ISelectedPagePresenter;
 import com.example.couponunion.presenter.ITicketPresenter;
 import com.example.couponunion.presenter.impl.CategoryPagerPresenterImpl;
 import com.example.couponunion.presenter.impl.HomePresenterImpl;
+import com.example.couponunion.presenter.impl.SelectedPagePresenterImpl;
 import com.example.couponunion.presenter.impl.TicketPresenterImpl;
 
 /**
@@ -15,12 +17,15 @@ public class PresenterManager {
     private IHomePresenter homePresenter;
     private ICategoryPagerPresenter categoryPagerPresenter;
     private ITicketPresenter ticketPresenter;
+    private ISelectedPagePresenter selectedPagePresenter;
 
 
     private PresenterManager() {
         categoryPagerPresenter = CategoryPagerPresenterImpl.getInstance();
         homePresenter = new HomePresenterImpl();
         ticketPresenter = new TicketPresenterImpl();
+        selectedPagePresenter = new SelectedPagePresenterImpl();
+
     }
 
     public static PresenterManager getInstance() {
@@ -46,4 +51,7 @@ public class PresenterManager {
     }
 
 
+    public ISelectedPagePresenter getSelectedPagePresenter() {
+        return selectedPagePresenter;
+    }
 }

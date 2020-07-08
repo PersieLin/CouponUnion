@@ -10,8 +10,6 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
 import com.example.couponunion.model.domain.HomePagerContent;
-import com.example.couponunion.utils.LogUtil;
-import com.example.couponunion.utils.ToastUtil;
 import com.example.couponunion.utils.UrlUtils;
 
 import java.util.ArrayList;

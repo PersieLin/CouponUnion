@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.couponunion.model.domain.Categories;
 import com.example.couponunion.ui.fragment.HomePagerFragment;
-import com.example.couponunion.utils.LogUtil;
+import com.example.couponunion.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
         if (categoryList != null)
             return categoryList.get(position).getTitle();
         else
-            LogUtil.e(this, "categoryList is empty!");
+            LogUtils.e(this, "categoryList is empty!");
         return "";
     }
 
