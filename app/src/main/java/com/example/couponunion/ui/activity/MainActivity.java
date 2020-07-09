@@ -10,7 +10,7 @@ import com.example.couponunion.R;
 import com.example.couponunion.base.BaseActivity;
 import com.example.couponunion.base.BaseFragment;
 import com.example.couponunion.ui.fragment.HomeFragment;
-import com.example.couponunion.ui.fragment.RedPacketFragment;
+import com.example.couponunion.ui.fragment.OnSellFragment;
 import com.example.couponunion.ui.fragment.SearchFragment;
 import com.example.couponunion.ui.fragment.SelectedFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -31,7 +31,7 @@ public class MainActivity extends BaseActivity {
     private FragmentManager fm;
     private HomeFragment mHomeFragment;
     private SelectedFragment mSelectedFragment;
-    private RedPacketFragment mRedPacketFragment;
+    private OnSellFragment mOnSellFragment;
     private SearchFragment mSearchFragment;
 
     private BaseFragment lastOneFragment = null;
@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity {
         fm = getSupportFragmentManager();
         mHomeFragment = new HomeFragment();
         mSelectedFragment = new SelectedFragment();
-        mRedPacketFragment = new RedPacketFragment();
+        mOnSellFragment = new OnSellFragment();
         mSearchFragment = new SearchFragment();
         //初始化切换fragment到首页
         switchFragment(mHomeFragment);
@@ -83,7 +83,7 @@ public class MainActivity extends BaseActivity {
                     switchFragment(mSelectedFragment);
                 } else if (item.getItemId() == R.id.red_packet) {
                     //切换到特惠
-                    switchFragment(mRedPacketFragment);
+                    switchFragment(mOnSellFragment);
                 } else if (item.getItemId() == R.id.search) {
                     //切换到搜索
                     switchFragment(mSearchFragment);

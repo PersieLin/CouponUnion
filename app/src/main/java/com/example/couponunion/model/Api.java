@@ -2,6 +2,7 @@ package com.example.couponunion.model;
 
 import com.example.couponunion.model.domain.Categories;
 import com.example.couponunion.model.domain.HomePagerContent;
+import com.example.couponunion.model.domain.OnSellContent;
 import com.example.couponunion.model.domain.SelecetdPageCategory;
 import com.example.couponunion.model.domain.SelectedPageContent;
 import com.example.couponunion.model.domain.TicketParams;
@@ -30,4 +31,8 @@ public interface Api {
 
     @GET
     Call<SelectedPageContent> getSelectedPageContents(@Url String url);
+
+    @GET
+    Call<OnSellContent> getOnSellPageContent(@Url String url);
 }
+
