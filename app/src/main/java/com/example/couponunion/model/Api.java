@@ -3,6 +3,8 @@ package com.example.couponunion.model;
 import com.example.couponunion.model.domain.Categories;
 import com.example.couponunion.model.domain.HomePagerContent;
 import com.example.couponunion.model.domain.OnSellContent;
+import com.example.couponunion.model.domain.SearchRecommend;
+import com.example.couponunion.model.domain.SearchResult;
 import com.example.couponunion.model.domain.SelecetdPageCategory;
 import com.example.couponunion.model.domain.SelectedPageContent;
 import com.example.couponunion.model.domain.TicketParams;
@@ -34,5 +36,20 @@ public interface Api {
 
     @GET
     Call<OnSellContent> getOnSellPageContent(@Url String url);
+
+
+    //获取热门搜索词接口
+    @GET("search/recommend")
+    Call<SearchRecommend> getRecommendWords();
+
+    /**
+     * 获取搜索结果
+     * @param page 页码
+     * @param keyword 关键词
+     * @return  搜索结果
+     */
+    @GET("search")
+    Call<SearchResult> getSearchResult(@Query("page")int page, @Query("keyword")String keyword);
+
 }
 

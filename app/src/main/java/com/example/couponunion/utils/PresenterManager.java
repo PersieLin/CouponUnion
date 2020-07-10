@@ -3,11 +3,13 @@ package com.example.couponunion.utils;
 import com.example.couponunion.presenter.ICategoryPagerPresenter;
 import com.example.couponunion.presenter.IHomePresenter;
 import com.example.couponunion.presenter.IOnSellPagePresenter;
+import com.example.couponunion.presenter.ISearchPresenter;
 import com.example.couponunion.presenter.ISelectedPagePresenter;
 import com.example.couponunion.presenter.ITicketPresenter;
 import com.example.couponunion.presenter.impl.CategoryPagerPresenterImpl;
 import com.example.couponunion.presenter.impl.HomePresenterImpl;
 import com.example.couponunion.presenter.impl.OnSellPagePresenterImpl;
+import com.example.couponunion.presenter.impl.SearchPresenter;
 import com.example.couponunion.presenter.impl.SelectedPagePresenterImpl;
 import com.example.couponunion.presenter.impl.TicketPresenterImpl;
 
@@ -21,6 +23,7 @@ public class PresenterManager {
     private ITicketPresenter ticketPresenter;
     private ISelectedPagePresenter selectedPagePresenter;
     private IOnSellPagePresenter onSellPagePresenter;
+    private ISearchPresenter searchPresenter;
 
 
 
@@ -30,6 +33,7 @@ public class PresenterManager {
         ticketPresenter = new TicketPresenterImpl();
         selectedPagePresenter = new SelectedPagePresenterImpl();
         onSellPagePresenter = new OnSellPagePresenterImpl();
+        searchPresenter = new SearchPresenter();
 
     }
 
@@ -64,4 +68,7 @@ public class PresenterManager {
         return onSellPagePresenter;
     }
 
+    public ISearchPresenter getSearchPresenter() {
+        return searchPresenter;
+    }
 }
